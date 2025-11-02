@@ -1,3 +1,4 @@
+import sys
 from stats import count_characters, count_words, sort_counts
 
 
@@ -16,15 +17,19 @@ def print_counts(counts: list[dict[str, str | int]]) -> None:
 
 
 def main() -> None:
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
     print("============ BOOKBOT ============")
-    frankenstein_path = "books/frankenstein.txt"
-    print(f"Analyzing book found at {frankenstein_path}")
-    frankenstein_txt = get_book_text(frankenstein_path)
+    book_filepath = sys.argv[1]
+    print(f"Analyzing book found at {book_filepath}")
+    book_text = get_book_text(book_filepath)
     print("----------- Word Count ----------")
-    num_words = count_words(frankenstein_txt)
+    num_words = count_words(book_text)
     print(f"Found {num_words} total words")
     print("--------- Character Count -------")
-    counts = count_characters(frankenstein_txt)
+    counts = count_characters(book_text)
     sorted_chars = sort_counts(counts)
     print_counts(sorted_chars)
     print("============= END ===============")
